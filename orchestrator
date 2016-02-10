@@ -18,6 +18,13 @@ Licensed under the MIT terms.
 declare ARCH
 ARCH="$(uname -m)"
 
+run_tests() {
+  echo "Tests running for $ARCH:"
+  declare test_files="${TESTS_FILES:-tests/$ARCH-*.bats}"
+  # shellcheck disable=SC2086
+  bats $test_files
+}
+
 version() {
   echo "$version"
 }
@@ -30,6 +37,7 @@ main() {
   set -eo pipefail; [[ "$TRACE" ]] && set -x
   declare cmd="$1"
   case "$cmd" in
+    test)           shift; run_tests "$@";;
     build)          shift; build "$@";;
     -h|--help)      shift; help "$@";;
     --version)      shift; version;;
