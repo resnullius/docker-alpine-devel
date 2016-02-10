@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# vim: ft=sh tw=80
+
+declare help="
+Orchestrator script for Alpine's development images.
+
+Usage:
+  orchestrator build
+  orchestrator --version
+  orchestrator -h | --help
+"
+
+declare version="
+Version: 1.0.0.
+Licensed under the MIT terms.
+"
+
+declare ARCH
+ARCH="$(uname -m)"
+
+version() {
+  echo "$version"
+}
+
+help() {
+  echo "$help"
+}
+
+main() {
+  set -eo pipefail; [[ "$TRACE" ]] && set -x
+  declare cmd="$1"
+  case "$cmd" in
+    build)          shift; build "$@";;
+    -h|--help)      shift; help "$@";;
+    --version)      shift; version;;
+    *)              help "$@";;
+  esac
+}
+
+main "$@"
