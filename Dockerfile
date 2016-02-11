@@ -1,9 +1,8 @@
-FROM gliderlabs/alpine:edge
+FROM resnullius/alpine:edge
 MAINTAINER Jose-Luis Rivas <me@ghostbar.co>
 
 VOLUME /opt/repo
-VOLUME /etc/apk/keys
+VOLUME /opt/keys
 
 RUN apk-install alpine-sdk && \
-  mkdir -p /var/cache/distfiles /opt/repo && \
-  sed -i 's/REPODEST=\$HOME\/packages\//REPODEST=\/opt\/repo\//' /etc/abuild.conf
+  mkdir -p /var/cache/distfiles
