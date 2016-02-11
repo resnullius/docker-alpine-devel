@@ -5,9 +5,14 @@ declare help="
 Orchestrator script for Alpine's development images.
 
 Usage:
+  orchestrator test
   orchestrator build
   orchestrator --version
   orchestrator -h | --help
+
+Options:
+  -h --help                 Show this screen.
+  --version                 Show versions.
 "
 
 declare version="
@@ -37,11 +42,11 @@ main() {
   set -eo pipefail; [[ "$TRACE" ]] && set -x
   declare cmd="$1"
   case "$cmd" in
-    test)           shift; run_tests "$@";;
-    build)          shift; build "$@";;
-    -h|--help)      shift; help "$@";;
-    --version)      shift; version;;
-    *)              help "$@";;
+    test)                 shift; run_tests "$@";;
+    build)                shift; build "$@";;
+    -h|--help)            shift; help "$@";;
+    --version)            shift; version;;
+    *)                    help "$@";;
   esac
 }
 
