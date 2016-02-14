@@ -23,6 +23,10 @@ Licensed under the MIT terms.
 declare ARCH
 ARCH="$(uname -m)"
 
+build() {
+  docker build -t ghostbar/alpine-devel .
+}
+
 run_tests() {
   echo "Tests running for $ARCH:"
   declare test_files="${TESTS_FILES:-tests/$ARCH-*.bats}"
