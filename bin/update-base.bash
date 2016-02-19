@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 declare help="
-Update script for Dockerfile.base into versions.
+Update script for base into versions.
 
 Usage:
-  update-dockerfiles.bash run
-  update-dockerfiles.bash --version
-  update-dockerfiles.bash -h | --help
+  update-base.bash run
+  update-base.bash --version
+  update-base.bash -h | --help
 
 Options:
   -h --help                 Show this screen.
@@ -18,6 +18,7 @@ Version: 1.0.0.
 Licensed under the MIT terms.
 "
 
+declare BASE_DIR="${BASE_DIR:-$PWD/base/}"
 declare FILES_BASE="${FILES_BASE:-Dockerfile.base}"
 declare FILES_CHILDS="${FILES_CHILDS:-edge 3.3}"
 declare FILES_CHILDS_DIR="${FILES_CHILDS_DIR:-versions}"
@@ -26,9 +27,9 @@ copy_files() {
   for file in $FILES_CHILDS; do
     echo "Copying and renaming for $file"
     mkdir -p "$FILES_CHILDS_DIR"/"$file"
-    cp "$FILES_BASE" "$FILES_CHILDS_DIR"/"$file"/Dockerfile
+    cp "$BASE_DIR"/"$FILES_BASE" "$FILES_CHILDS_DIR"/"$file"/Dockerfile
     rm -rf "$FILES_CHILDS_DIR"/"$file"/scripts
-    cp -R scripts "$FILES_CHILDS_DIR"/"$file"/
+    cp -R "$BASE_DIR"/scripts "$FILES_CHILDS_DIR"/"$file"/
   done
 }
 
