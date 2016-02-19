@@ -7,4 +7,9 @@ VOLUME /opt/conf
 COPY scripts/ /opt/scripts
 
 RUN apk-install alpine-sdk && \
-  mkdir -p /var/cache/distfiles
+  mkdir -p /var/cache/distfiles && \
+  chmod a+w /var/cache/distfiles && \
+  sh /opt/scripts/setup-system.sh && \
+  adduser -S builder
+
+USER builder
