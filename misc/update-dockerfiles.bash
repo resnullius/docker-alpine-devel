@@ -27,6 +27,8 @@ copy_files() {
     echo "Copying and renaming for $file"
     mkdir -p "$FILES_CHILDS_DIR"/"$file"
     cp "$FILES_BASE" "$FILES_CHILDS_DIR"/"$file"/Dockerfile
+    rm -rf "$FILES_CHILDS_DIR"/"$file"/scripts
+    cp -R scripts "$FILES_CHILDS_DIR"/"$file"/
   done
 }
 
