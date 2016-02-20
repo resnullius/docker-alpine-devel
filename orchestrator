@@ -25,7 +25,7 @@ declare ARCH
 ARCH="$(uname -m)"
 
 build() {
-  docker build -t ghostbar/alpine-devel ./versions/3.3/
+  docker build -t resnullius/alpine-devel ./versions/3.3/
 }
 
 run_tests() {
