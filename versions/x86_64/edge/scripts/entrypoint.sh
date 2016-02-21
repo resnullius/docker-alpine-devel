@@ -40,6 +40,10 @@ gen_apkindex() {
   sudo abuild-sign APKINDEX.tar.gz
 }
 
+update_apkbuild() {
+  sudo cp "$HOME"/src/APKBUILD /opt/src/
+}
+
 main() {
   sh /bin/setup-system.sh
 
@@ -49,6 +53,7 @@ main() {
   run_build "$@"
   copy_finalpkg
   gen_apkindex
+  update_apkbuild
 }
 
 main "$@"
