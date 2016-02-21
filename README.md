@@ -1,6 +1,9 @@
 docker-alpine-dev
 =================
 
+    docker pull resnullius/alpine-devel
+    docker pull resnullius/alpine-devel-armv7l
+
 WHAT IS THIS?
 -------------
 Initial image for doing alpine development. Running this image you should be
