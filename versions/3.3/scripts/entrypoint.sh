@@ -19,7 +19,7 @@ copy_src() {
 add_local_repo() {
   [ -d "$REPO_DIR" ] && \
     [ -f "$REPO_DIR"/APKINDEX.tar.gz ] && \
-    echo "$REPO_DIR" >> /etc/apk/repositories
+    sudo sh -c "echo /opt/repo >> /etc/apk/repositories"
   echo "If there was anything on your repo, it's available now"
 }
 
@@ -37,6 +37,7 @@ copy_finalpkg() {
 gen_apkindex() {
   cd /opt/repo/"$ARCH"/
   sudo apk index -o APKINDEX.tar.gz ./*.apk
+  sudo abuild-sign APKINDEX.tar.gz
 }
 
 main() {
