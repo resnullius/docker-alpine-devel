@@ -2,6 +2,7 @@
 set -e
 USER=$(whoami)
 ARCH=$(uname -m)
+REPO_DIR=/opt/repo/"$ARCH"
 
 copy_keys() {
   mkdir "$HOME"/.abuild
@@ -15,6 +16,11 @@ copy_src() {
     sudo chown -R "$USER" "$HOME"/src
 }
 
+add_local_repo() {
+  [ -f "$REPO_DIR"/APKINDEX.tar.gz ] && \
+    echo "$REPO_DIR" >> /etc/apk/repositories
+}
+
 run_build() {
   mkdir -p "$HOME"/packages
   abuild-apk update
@@ -22,7 +28,7 @@ run_build() {
 }
 
 copy_finalpkg() {
-  sudo mkdir -p /opt/repo/"$ARCH"/
+  [ -d "$REPO_DIR" ] || sudo mkdir -p "$REPO_DIR"
   sudo cp "$HOME"/packages/builder/"$ARCH"/*.apk /opt/repo/"$ARCH"/
 }
 
@@ -36,6 +42,7 @@ main() {
 
   copy_keys
   copy_src
+  add_local_repo
   run_build "$@"
   copy_finalpkg
   gen_apkindex
