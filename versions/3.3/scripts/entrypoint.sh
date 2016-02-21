@@ -17,8 +17,10 @@ copy_src() {
 }
 
 add_local_repo() {
-  [ -f "$REPO_DIR"/APKINDEX.tar.gz ] && \
+  [ -d "$REPO_DIR" ] && \
+    [ -f "$REPO_DIR"/APKINDEX.tar.gz ] && \
     echo "$REPO_DIR" >> /etc/apk/repositories
+  echo "If there was anything on your repo, it's available now"
 }
 
 run_build() {
