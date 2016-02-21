@@ -51,6 +51,16 @@ update_base() {
   bash bin/update-base.bash run
 }
 
+update_versions() {
+  bash bin/update-versions.bash run
+}
+
+run_all() {
+  update_base
+  update_versions
+  build
+}
+
 version() {
   echo "$version"
 }
@@ -65,9 +75,11 @@ main() {
   case "$cmd" in
     test)                 shift; run_tests "$@";;
     build)                shift; build "$@";;
+    all)                  shift; run_all "$@";;
     -h|--help)            shift; help "$@";;
     --version)            shift; version;;
     update-base)          shift; update_base;;
+    update-versions)      shift; update_versions;;
     *)                    help "$@";;
   esac
 }
