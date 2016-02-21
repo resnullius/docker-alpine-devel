@@ -8,6 +8,8 @@ Usage:
   orchestrator test
   orchestrator build
   orchestrator update-base
+  orchestrator update-versions
+  orchestrator update-all
   orchestrator --version
   orchestrator -h | --help
 
@@ -55,10 +57,10 @@ update_versions() {
   bash bin/update-versions.bash run
 }
 
-run_all() {
+update_all() {
   update_base
+
   update_versions
-  build
 }
 
 version() {
@@ -75,7 +77,7 @@ main() {
   case "$cmd" in
     test)                 shift; run_tests "$@";;
     build)                shift; build "$@";;
-    all)                  shift; run_all "$@";;
+    update-all)           shift; update_all "$@";;
     -h|--help)            shift; help "$@";;
     --version)            shift; version;;
     update-base)          shift; update_base;;
