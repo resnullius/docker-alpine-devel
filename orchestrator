@@ -58,7 +58,7 @@ push() {
     ( # shellcheck source=versions/x86_64/3.3/options
     source "$version"/options
     for tag in "${TAGS[@]}"; do
-      if docker history "$tag" & > /dev/null; then
+      if docker history "$tag" &> /dev/null; then
         docker push "$tag"
       fi
     done
