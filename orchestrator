@@ -6,6 +6,7 @@ Orchestrator script for Alpine's development images.
 
 Usage:
   orchestrator test
+  orchestrator push
   orchestrator build
   orchestrator update-base
   orchestrator update-versions
@@ -49,6 +50,22 @@ run_tests() {
   bats $test_files
 }
 
+push() {
+  [[ "$NO_PUSH" ]] && return 0
+
+  for version in $VERSIONS; do
+    echo "Pushing version $version"
+    ( # shellcheck source=versions/x86_64/3.3/options
+    source "$version"/options
+    for tag in "${TAGS[@]}"; do
+      if docker history "$tag" & > /dev/null; then
+        docker push "$tag"
+      fi
+    done
+    )
+  done
+}
+
 update_base() {
   bash bin/update-base.bash run
 }
@@ -77,6 +94,7 @@ main() {
   case "$cmd" in
     test)                 shift; run_tests "$@";;
     build)                shift; build "$@";;
+    push)                 shift; push "$@";;
     update-all)           shift; update_all "$@";;
     -h|--help)            shift; help "$@";;
     --version)            shift; version;;
