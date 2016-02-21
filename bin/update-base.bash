@@ -20,8 +20,8 @@ Licensed under the MIT terms.
 
 declare BASE_DIR="${BASE_DIR:-$PWD/base/}"
 declare FILES_BASE="${FILES_BASE:-Dockerfile.base}"
-declare FILES_CHILDS="${FILES_CHILDS:-edge 3.3}"
-declare FILES_CHILDS_DIR="${FILES_CHILDS_DIR:-versions}"
+declare FILES_CHILDS="${FILES_CHILDS:-edge 3.3 3.2}"
+declare FILES_CHILDS_DIR="${FILES_CHILDS_DIR:-versions/base}"
 
 copy_files() {
   for file in $FILES_CHILDS; do
@@ -30,6 +30,7 @@ copy_files() {
     cp "$BASE_DIR"/"$FILES_BASE" "$FILES_CHILDS_DIR"/"$file"/Dockerfile
     rm -rf "$FILES_CHILDS_DIR"/"$file"/scripts
     cp -R "$BASE_DIR"/scripts "$FILES_CHILDS_DIR"/"$file"/
+    cp "$BASE_DIR"/options "$FILES_CHILDS_DIR"/"$file"/options
   done
 }
 
@@ -37,6 +38,8 @@ change_version() {
   for file in $FILES_CHILDS; do
     echo "Changing tag for $file"
     sed -i '' -e "s/alpine:/alpine:$file/" "$FILES_CHILDS_DIR/$file/Dockerfile"
+    sed -i '' -e "s/alpine-devel:/alpine-devel:$file/" \
+      "$FILES_CHILDS_DIR/$file/options"
   done
 }
 
