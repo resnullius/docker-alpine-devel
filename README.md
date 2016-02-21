@@ -3,27 +3,17 @@ docker-alpine-dev
 
 WHAT IS THIS?
 -------------
-
 Initial image for doing alpine development. Running this image you should be
 able to build packages for Alpine's different versions inside a docker container
 and ship them for installation.
 
-There are two main scripts, one for generating your signing-key which should be
-used just once and other for building which expects you to have a signing-key
-and an `abuild.conf` which your data.
-
-The build script allows you to use your own packages as a local repo for
-building with them as dependency requirements and leaves you with a directory
-which you could just publish on the internet and point other people to use as a
-repository, directly.
-
-VOLUMES
--------
-
-* `/opt/conf`
-* `/opt/keys`
-* `/opt/src`
-* `/opt/repo`
+HOW DO I USE IT?
+----------------
+Good you ask! I made a very nice script in bash that will help you out and make
+it as easy as editing files and launching a command in your terminal! It's
+called [alpine-devel-howto](https://github.com/resnullius/alpine-devel-howto)
+and will help you generating your keys, building your packages and even making
+it easy to get a ready-to-publish repo with your packages signed.
 
 AUTHOR AND LICENSE
 ------------------
