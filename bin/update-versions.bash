@@ -25,8 +25,13 @@ declare VERSIONS_CHILDS="${VERSIONS_CHILDS:-versions/armv7l versions/x86_64}"
 create_tag() {
   local OPTIONS="${OPTIONS:-$1/**/options}"
   for file in $OPTIONS; do
-    echo "tags on $file is being updated"
+    echo "tags on $file are being updated"
     sed -i '' -e 's/alpine-devel:/alpine-devel-armv7l:/g' "$file"
+  done
+  local DOCKERFILES="${DOCKERFILES:-$1/**/Dockerfile}"
+  for file in $DOCKERFILES; do
+    echo "FROM on $file is being updated"
+    sed -i '' -e 's/alpine:/alpine-armv7l:/g' "$file"
   done
 }
 
