@@ -37,6 +37,7 @@ copy_finalpkg() {
 gen_apkindex() {
   cd /opt/repo/"$ARCH"/
   sudo apk index -o APKINDEX.tar.gz ./*.apk
+  sudo abuild-sign APKINDEX.tar.gz
 }
 
 main() {
