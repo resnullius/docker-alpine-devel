@@ -1,4 +1,4 @@
-FROM resnullius/alpine:3.3
+FROM resnullius/alpine-armv7l:3.3
 MAINTAINER Jose-Luis Rivas <me@ghostbar.co>
 
 VOLUME /opt/repo
