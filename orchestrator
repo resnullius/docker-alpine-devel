@@ -23,9 +23,21 @@ Licensed under the MIT terms.
 
 declare ARCH
 ARCH="$(uname -m)"
+declare VERSIONS="${VERSIONS:-versions/$ARCH/*}"
 
 build() {
-  docker build -t resnullius/alpine-devel ./versions/3.3/
+  echo "Building for architecture: $ARCH"
+  echo "Will build versions: $VERSIONS"
+
+  for version in $VERSIONS; do
+    echo "Building version $version"
+    ( # shellcheck source=versions/x86_64/3.3/options
+    source "$version"/options
+    for tag in "${TAGS[@]}"; do
+      docker build -t "$tag" "$version"
+    done
+    )
+  done
 }
 
 run_tests() {
