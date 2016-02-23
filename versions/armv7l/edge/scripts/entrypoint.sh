@@ -2,7 +2,14 @@
 set -e
 USER=$(whoami)
 ARCH=$(uname -m)
-REPO_DIR=/opt/repo/"$ARCH"
+BUILD_ARCH="$ARCH"
+
+PRE=$(echo "$ARCH" | grep "arm")
+if [ "$PRE" == "$ARCH" ]; then
+  BUILD_ARCH="armhf"
+fi
+
+REPO_DIR=/opt/repo/"$BUILD_ARCH"
 
 copy_keys() {
   mkdir "$HOME"/.abuild
@@ -30,12 +37,13 @@ run_build() {
 }
 
 copy_finalpkg() {
+
   [ -d "$REPO_DIR" ] || sudo mkdir -p "$REPO_DIR"
-  sudo cp "$HOME"/packages/builder/"$ARCH"/*.apk /opt/repo/"$ARCH"/
+  sudo cp "$HOME"/packages/builder/"$BUILD_ARCH"/*.apk /opt/repo/"$BUILD_ARCH"/
 }
 
 gen_apkindex() {
-  cd /opt/repo/"$ARCH"/
+  cd /opt/repo/"$BUILD_ARCH"/
   sudo apk index -o APKINDEX.tar.gz ./*.apk
   sudo abuild-sign APKINDEX.tar.gz
 }
