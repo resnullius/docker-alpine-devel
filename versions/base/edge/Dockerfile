@@ -13,7 +13,8 @@ RUN apk-install alpine-sdk coreutils && \
   mkdir -p /var/cache/distfiles && \
   chmod a+w /var/cache/distfiles && \
   adduser -G abuild -S builder && \
-  echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+  echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+  echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 USER builder
 COPY scripts/* /bin/
