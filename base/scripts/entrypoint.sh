@@ -5,7 +5,7 @@ ARCH=$(uname -m)
 BUILD_ARCH="$ARCH"
 
 PRE=$(echo "$ARCH" | grep "arm") && echo "ANYTHING"
-if [ "$PRE" == "$ARCH" ]; then
+if [ "$PRE" = "$ARCH" ]; then
   BUILD_ARCH="armhf"
 fi
 
