@@ -36,6 +36,10 @@ run_build() {
   abuild checksum && abuild "$@"
 }
 
+run_only_checksum() {
+  abuild checksum
+}
+
 copy_finalpkg() {
 
   [ -d "$REPO_DIR" ] || sudo mkdir -p "$REPO_DIR"
