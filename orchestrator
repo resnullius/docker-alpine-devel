@@ -29,10 +29,11 @@ ARCH="$(uname -m)"
 declare VERSIONS="${VERSIONS:-versions/$ARCH/*}"
 
 build() {
+  declare build_files="${*:-$VERSIONS}"
   echo "Building for architecture: $ARCH"
-  echo "Will build versions: $VERSIONS"
+  echo "Will build versions: $build_files"
 
-  for version in $VERSIONS; do
+  for version in $build_files; do
     echo "Building version $version"
     ( # shellcheck source=versions/x86_64/3.3/options
     source "$version"/options
@@ -53,7 +54,9 @@ run_tests() {
 push() {
   [[ "$NO_PUSH" ]] && return 0
 
-  for version in $VERSIONS; do
+  declare push_files="${*:-$VERSIONS}"
+
+  for version in $push_files; do
     echo "Pushing version $version"
     ( # shellcheck source=versions/x86_64/3.3/options
     source "$version"/options
