@@ -18,4 +18,4 @@ RUN apk-install alpine-sdk coreutils bash && \
 USER builder
 COPY scripts/* /bin/
 
-ENTRYPOINT ["entrypoint.sh", "-r"]
+ENTRYPOINT ["entrypoint.sh"]

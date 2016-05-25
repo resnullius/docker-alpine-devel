@@ -65,7 +65,7 @@ add_extra_repo() {
 run_build() {
   mkdir -p "$HOME"/packages
   abuild-apk update
-  abuild checksum && abuild "$@"
+  abuild checksum && abuild -r
 }
 
 run_only_checksum() {
