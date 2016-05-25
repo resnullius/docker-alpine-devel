@@ -114,7 +114,7 @@ main() {
     --version)            shift; print_version;;
     update-base)          shift; update_base;;
     update-versions)      shift; update_versions;;
-    *)                    help "$@";;
+    *)                    print_help "$@";;
   esac
 }
 
