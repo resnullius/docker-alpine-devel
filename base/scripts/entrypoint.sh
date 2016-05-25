@@ -57,6 +57,11 @@ add_local_repo() {
   echo "If there was anything on your repo, it's available now"
 }
 
+add_extra_repo() {
+  sudo sh -c "echo $1 >> /etc/apk/repositories"
+  echo "Added extra repo $1."
+}
+
 run_build() {
   mkdir -p "$HOME"/packages
   abuild-apk update
