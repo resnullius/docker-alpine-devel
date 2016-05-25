@@ -8,13 +8,12 @@ VOLUME /opt/src
 
 WORKDIR /home/builder/src
 
-RUN apk-install alpine-sdk coreutils && \
+RUN apk-install alpine-sdk coreutils bash && \
   rm /etc/abuild.conf && \
   mkdir -p /var/cache/distfiles && \
   chmod a+w /var/cache/distfiles && \
   adduser -G abuild -S builder && \
-  echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-  echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+  echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER builder
 COPY scripts/* /bin/

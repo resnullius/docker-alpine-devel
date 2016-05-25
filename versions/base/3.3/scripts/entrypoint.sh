@@ -1,15 +1,42 @@
-#!/usr/bin/env sh
-set -e
-USER=$(whoami)
-ARCH=$(uname -m)
-BUILD_ARCH="$ARCH"
+#!/usr/bin/env bash
+# vim: ft=sh tw=80
 
-PRE=$(echo "$ARCH" | grep "arm") && echo "ANYTHING"
-if [ "$PRE" == "$ARCH" ]; then
+declare help="
+Entrypoint for docker-alpine-devel images.
+
+Usage:
+  entrypoint.sh build
+  entrypoint.sh checksum
+  entrypoint.sh --version
+  entrypoint.sh -h | --help
+
+Options:
+  -h --help       Show this screen.
+  --version       Show version.
+"
+
+declare version="
+Version: 2.0.0.
+Licensed under the MIT terms.
+"
+
+declare USER
+USER=$(whoami)
+declare ARCH
+ARCH=$(uname -m)
+declare BUILD_ARCH="$ARCH"
+
+declare PRE
+PRE=$(echo "$ARCH" | grep "arm")
+if [ "$PRE" = "$ARCH" ]; then
   BUILD_ARCH="armhf"
 fi
 
-REPO_DIR=/opt/repo/"$BUILD_ARCH"
+declare REPO_DIR=/opt/repo/"$BUILD_ARCH"
+
+setup_system() {
+  bash /bin/setup-system.sh
+}
 
 copy_keys() {
   mkdir "$HOME"/.abuild
@@ -30,14 +57,22 @@ add_local_repo() {
   echo "If there was anything on your repo, it's available now"
 }
 
+add_extra_repo() {
+  sudo sh -c "echo $1 >> /etc/apk/repositories"
+  echo "Added extra repo $1."
+}
+
 run_build() {
   mkdir -p "$HOME"/packages
   abuild-apk update
   abuild checksum && abuild "$@"
 }
 
-copy_finalpkg() {
+run_only_checksum() {
+  abuild checksum
+}
 
+copy_finalpkg() {
   [ -d "$REPO_DIR" ] || sudo mkdir -p "$REPO_DIR"
   sudo cp "$HOME"/packages/builder/"$BUILD_ARCH"/*.apk /opt/repo/"$BUILD_ARCH"/
 }
@@ -52,9 +87,7 @@ update_apkbuild() {
   sudo cp "$HOME"/src/APKBUILD /opt/src/
 }
 
-main() {
-  sh /bin/setup-system.sh
-
+build_apk() {
   copy_keys
   copy_src
   add_local_repo
@@ -62,6 +95,23 @@ main() {
   copy_finalpkg
   gen_apkindex
   update_apkbuild
+}
+
+print_version() {
+  echo "$version"
+}
+
+print_help() {
+  echo "$help"
+}
+
+main() {
+  set -eo pipefail; [[ "$TRACE" ]] && set -x
+  declare cmd="$1"
+  case "$cmd" in
+    build)          shift; build_apk "$@";;
+    *)              print_help "$@";;
+  esac
 }
 
 main "$@"

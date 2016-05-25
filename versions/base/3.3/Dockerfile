@@ -8,7 +8,7 @@ VOLUME /opt/src
 
 WORKDIR /home/builder/src
 
-RUN apk-install alpine-sdk coreutils && \
+RUN apk-install alpine-sdk coreutils bash && \
   rm /etc/abuild.conf && \
   mkdir -p /var/cache/distfiles && \
   chmod a+w /var/cache/distfiles && \

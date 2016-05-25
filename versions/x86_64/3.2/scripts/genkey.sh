@@ -1,5 +1,5 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-sh /bin/setup-system.sh
+bash /bin/setup-system.sh
 abuild-keygen -n
 sudo cp "$HOME"/.abuild/*.rsa* /opt/keys
