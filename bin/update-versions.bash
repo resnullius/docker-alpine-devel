@@ -15,7 +15,7 @@ Options:
 "
 
 declare version="
-Version: 1.0.0.
+Version: 2.0.0.
 Licensed under the MIT terms.
 "
 
@@ -26,12 +26,12 @@ create_tag() {
   local OPTIONS="${OPTIONS:-$1/**/options}"
   for file in $OPTIONS; do
     echo "tags on $file are being updated"
-    sed -i '' -e 's/alpine-devel:/alpine-devel-armv7l:/g' "$file"
+    sed -i -e 's/alpine-devel:/alpine-devel-armv7l:/g' "$file"
   done
   local DOCKERFILES="${DOCKERFILES:-$1/**/Dockerfile}"
   for file in $DOCKERFILES; do
     echo "FROM on $file is being updated"
-    sed -i '' -e 's/alpine:/alpine-armv7l:/g' "$file"
+    sed -i -e 's/alpine:/alpine-armv7l:/g' "$file"
   done
 }
 

@@ -14,7 +14,7 @@ Options:
 "
 
 declare version="
-Version: 1.0.0.
+Version: 2.0.0.
 Licensed under the MIT terms.
 "
 
@@ -37,8 +37,8 @@ copy_files() {
 change_version() {
   for file in $FILES_CHILDS; do
     echo "Changing tag for $file"
-    sed -i '' -e "s/alpine:/alpine:$file/" "$FILES_CHILDS_DIR/$file/Dockerfile"
-    sed -i '' -e "s/alpine-devel:/alpine-devel:$file/" \
+    sed -i -e "s/alpine:/alpine:$file/" "$FILES_CHILDS_DIR/$file/Dockerfile"
+    sed -i -e "s/alpine-devel:/alpine-devel:$file/" \
       "$FILES_CHILDS_DIR/$file/options"
   done
 }
