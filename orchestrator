@@ -94,11 +94,11 @@ update_all() {
   update_versions
 }
 
-version() {
+print_version() {
   echo "$version"
 }
 
-help() {
+print_help() {
   echo "$help"
 }
 
@@ -110,8 +110,8 @@ main() {
     build)                shift; build "$@";;
     push)                 shift; push "$@";;
     update-all)           shift; update_all "$@";;
-    -h|--help)            shift; help "$@";;
-    --version)            shift; version;;
+    -h|--help)            shift; print_help "$@";;
+    --version)            shift; print_version;;
     update-base)          shift; update_base;;
     update-versions)      shift; update_versions;;
     *)                    help "$@";;
