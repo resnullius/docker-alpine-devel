@@ -38,7 +38,7 @@ create_tag() {
 run_updater() {
   for ver in $VERSIONS_CHILDS; do
     echo "Copying scripts from $VERSIONS_BASE to $ver"
-    cp -R "$VERSIONS_BASE/" "$ver"
+    cp -R "$VERSIONS_BASE"/* "$ver"
     [[ "$ver" = "versions/armv7l" ]] && create_tag "$ver"
     echo "Done on $ver"
   done
