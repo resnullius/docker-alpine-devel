@@ -35,7 +35,7 @@ fi
 declare REPO_DIR=/opt/repo/"$BUILD_ARCH"
 
 setup_system() {
-  sh /bin/setup-system.sh
+  bash /bin/setup-system.sh
 }
 
 copy_keys() {
