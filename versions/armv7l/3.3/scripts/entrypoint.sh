@@ -107,6 +107,9 @@ print_help() {
 
 main() {
   set -eo pipefail; [[ "$TRACE" ]] && set -x
+
+  setup_system
+
   declare cmd="$1"
   case "$cmd" in
     build)          shift; build_apk "$@";;
