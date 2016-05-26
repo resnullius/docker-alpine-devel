@@ -97,6 +97,12 @@ build_apk() {
   update_apkbuild
 }
 
+do_checksum() {
+  copy_src
+  run_only_checksum
+  update_apkbuild
+}
+
 print_version() {
   echo "$version"
 }
@@ -113,6 +119,7 @@ main() {
   declare cmd="$1"
   case "$cmd" in
     build)          shift; build_apk "$@";;
+    checksum)       shift; do_checksum "$@";;
     *)              print_help "$@";;
   esac
 }
