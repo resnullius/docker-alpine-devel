@@ -20,7 +20,7 @@ Licensed under the MIT terms.
 
 declare BASE_DIR="${BASE_DIR:-$PWD/base/}"
 declare FILES_BASE="${FILES_BASE:-Dockerfile.base}"
-declare FILES_CHILDS="${FILES_CHILDS:-edge 3.3 3.2}"
+declare FILES_CHILDS="${FILES_CHILDS:-edge 3.5 3.4 3.3 3.2}"
 declare FILES_CHILDS_DIR="${FILES_CHILDS_DIR:-versions/base}"
 
 copy_files() {
