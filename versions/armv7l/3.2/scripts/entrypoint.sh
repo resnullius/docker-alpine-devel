@@ -45,6 +45,12 @@ copy_keys() {
   sudo cp /opt/keys/*.rsa.pub /etc/apk/keys
 }
 
+copy_extra_keys() {
+  if [ ! -z "$(ls -A /opt/extrakeys)" ]; then
+    sudo cp /opt/extrakeys/*.rsa.pub /etc/apk/keys
+  fi
+}
+
 copy_src() {
   sudo cp -R /opt/src/* "$HOME"/src && \
     sudo chown -R "$USER" "$HOME"/src
@@ -89,6 +95,7 @@ update_apkbuild() {
 
 build_apk() {
   copy_keys
+  copy_extra_keys
   copy_src
   add_local_repo
   run_build "$@"

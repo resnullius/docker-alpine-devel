@@ -5,6 +5,7 @@ VOLUME /opt/repo
 VOLUME /opt/keys
 VOLUME /opt/conf
 VOLUME /opt/src
+VOLUME /opt/extrakeys
 
 WORKDIR /home/builder/src
 
