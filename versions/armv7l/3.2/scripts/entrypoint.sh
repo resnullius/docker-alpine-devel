@@ -78,7 +78,7 @@ add_local_repo() {
 }
 
 add_extra_repo() {
-  if [ ! "${extra_repos[@]}" -eq 0 ]; then
+  if [ ! "${#extra_repos[@]}" -eq 0 ]; then
     for repo in "${extra_repos[@]}"; do
       sudo sh -c "echo $repo >> /etc/apk/repositories"
       echo "Added extra repo $repo"
