@@ -5,7 +5,7 @@ declare help="
 Entrypoint for docker-alpine-devel images.
 
 Usage:
-  entrypoint.sh build
+  entrypoint.sh build [-x https://extra.repo/path] [-x https://extra.repo/other]
   entrypoint.sh checksum
   entrypoint.sh --version
   entrypoint.sh -h | --help
@@ -33,6 +33,20 @@ if [ "$PRE" = "$ARCH" ]; then
 fi
 
 declare REPO_DIR=/opt/repo/"$BUILD_ARCH"
+declare -a extra_repos
+
+eval_opts() {
+  while getopts ":x:" opt "$@"; do
+    case "$opt" in
+      x)
+        extra_repos+=("$OPTARG");;
+      \?)
+        echo "Invalid option -$OPTARG ignored" >&2;;
+      :)
+        echo "Option -$OPTARG requires an argument" >&2 && exit 1;;
+    esac
+  done
+}
 
 setup_system() {
   bash /bin/setup-system.sh
@@ -64,8 +78,12 @@ add_local_repo() {
 }
 
 add_extra_repo() {
-  sudo sh -c "echo $1 >> /etc/apk/repositories"
-  echo "Added extra repo $1."
+  if [ ! "${extra_repos[@]}" -eq 0 ]; then
+    for repo in "${extra_repos[@]}"; do
+      sudo sh -c "echo $repo >> /etc/apk/repositories"
+      echo "Added extra repo $repo"
+    done
+  fi
 }
 
 run_build() {
@@ -94,10 +112,12 @@ update_apkbuild() {
 }
 
 build_apk() {
+  eval_opts "$@"
   copy_keys
   copy_extra_keys
   copy_src
   add_local_repo
+  add_extra_repo
   run_build "$@"
   copy_finalpkg
   gen_apkindex
